@@ -65,33 +65,18 @@ void Si5391_write_16bit_register(si5391_reva_register_t reg)
 }
 
 void si5391_load_configuration() {
+
     uint16_t num_regs=SI5391_REVA_REG_CONFIG_NUM_REGS;
-    //uint8_t page_reg=0;
 
     for (uint16_t i = 0; i < 2; i++) {
         Si5391_write_16bit_register(si5391_reva_registers[i]);
-       /* if(page_reg != si5391_reva_registers[i].address >> 8){
-            Si5391_writeRegister(0x01 , si5391_reva_registers[i].address >> 8);
-            Si5391_writeRegister(si5391_reva_registers[i].address , si5391_reva_registers[i].value);
-            page_reg=si5391_reva_registers[i].address >> 8;
-            //Si5391_writeRegister(si5391_reva_registers[i]);
-        }else{
-            Si5391_writeRegister(si5391_reva_registers[i].address , si5391_reva_registers[i].value);
-        }*/
+
     }
 
     delay_cycles(0.3*32000000UL);
 
     for (uint16_t i = 2; i < num_regs; i++) {
         Si5391_write_16bit_register(si5391_reva_registers[i]);
-       /* if(page_reg != si5391_reva_registers[i].address >> 8){
-                    Si5391_writeRegister(0x01 , si5391_reva_registers[i].address >> 8);
-                    Si5391_writeRegister(si5391_reva_registers[i].address , si5391_reva_registers[i].value);
-                    page_reg=si5391_reva_registers[i].address >> 8;
-                    //Si5391_writeRegister(si5391_reva_registers[i]);
-                }else{
-                    Si5391_writeRegister(si5391_reva_registers[i].address , si5391_reva_registers[i].value);
-                }*/
 
     }
 }
@@ -111,11 +96,11 @@ int main(void)
     NVIC_EnableIRQ(I2C_INST_INT_IRQN);
 
     I2C_init(&gI2C);
+
     while(!si5391_ready()){}
     si5391_load_configuration();
 
 }
-
 
 
 int rest_val = 0;
