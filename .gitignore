@@ -1,4 +1,7 @@
 /Debug/
 /.settings/
 .clangd
-
+.ccsproject
+.cproject
+.project
+.gitignore
